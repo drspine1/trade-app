@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { usePortfolioStore } from '@/lib/store';
 import { BarChart2, Briefcase, History } from 'lucide-react';
@@ -26,7 +27,7 @@ export function NavHeader() {
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-          <img src="/favicon.svg" alt="Pure Technique" width={32} height={32} className="rounded-lg" />
+          <Image src="/favicon.svg" alt="Pure Technique" width={32} height={32} className="rounded-lg" />
           <span className="hidden sm:inline text-sm font-normal" style={{ color: 'var(--color-light)' }}>
             Pure Technique
           </span>

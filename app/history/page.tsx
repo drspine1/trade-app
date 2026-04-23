@@ -29,7 +29,7 @@ export default function HistoryPage() {
   }
 
   return (
-    <main className="min-h-screen p-6" style={{ background: 'var(--color-bg-1)' }}>
+    <main className="min-h-screen px-2 md:px-6 p-6" style={{ background: 'var(--color-bg-1)' }}>
       <div className="max-w-5xl mx-auto">
         <h1 className="text-2xl font-bold mb-6" style={{ color: 'var(--color-white)' }}>
           Transaction History

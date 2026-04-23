@@ -1,0 +1,18 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="512" y2="512">
+      <stop offset="0%" stop-color="#25003e"/>
+      <stop offset="100%" stop-color="#140021"/>
+    </linearGradient>
+    <linearGradient id="fgGrad" x1="0" y1="0" x2="512" y2="512">
+      <stop offset="0%" stop-color="#ff7b02"/>
+      <stop offset="100%" stop-color="#e5a55d"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="url(#bgGrad)"/>
+  <g transform="translate(256,256)">
+    <path d="M-120-140L-120 140L-80 140L-80 20L-20 20C20 20 60 20 60-60C60-140 20-140-20-140ZM-80-100L-20-100C0-100 20-100 20-60C20-20 0-20-20-20L-80-20Z" fill="url(#fgGrad)"/>
+    <path d="M40-140L40-100L80-100L80 140L120 140L120-100L160-100L160-140Z" fill="url(#fgGrad)"/>
+    <path d="M-140 180Q-60 160 0 180T140 180" stroke="#ff7b02" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

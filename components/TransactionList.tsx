@@ -46,7 +46,7 @@ export const TransactionList = React.memo(function TransactionList({ transaction
     >
       {/* Header row */}
       <div
-        className="grid grid-cols-6 gap-4 px-4 py-3 text-xs font-medium uppercase tracking-wider"
+        className="grid grid-cols-6 gap-4 px-4 py-3 text-[9px] md:text-xs font-medium uppercase tracking-wider"
         style={{ borderBottom: '1px solid var(--color-bg-4)', color: 'var(--color-light)' }}
       >
         <span>Asset</span>
@@ -87,7 +87,7 @@ function TxRow({ tx }: { tx: Transaction }) {
   const isBuy = tx.type === 'BUY';
   return (
     <div
-      className="grid grid-cols-6 gap-4 px-4 py-3 text-sm transition-colors"
+      className="grid grid-cols-6 gap-4 px-4 py-3 text-[9px] md:text-sm transition-colors"
       style={{ borderBottom: '1px solid color-mix(in srgb, var(--color-bg-4) 60%, transparent)' }}
       onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--color-bg-4)')}
       onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}

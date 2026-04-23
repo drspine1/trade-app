@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 const year = new Date().getFullYear();
 
@@ -32,7 +33,7 @@ export function Footer() {
 
           {/* Left — branding */}
           <div className="flex items-center gap-3">
-            <img src="/favicon.svg" alt="PT" width={28} height={28} className="rounded-md opacity-90" />
+            <Image src="/favicon.svg" alt="PT" width={28} height={28} className="rounded-md opacity-90" />
             <div>
               <p className="text-sm font-semibold" style={{ color: 'var(--color-white)' }}>
                 Pure Technique

@@ -143,7 +143,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={handleBuyClick}
-                    className="px-6 py-3 font-semibold rounded-lg transition-colors"
+                    className="md:px-6 md:py-3 px-3 py-2 font-semibold rounded-lg transition-colors md:text-lg text-sm"
                     style={{ background: '#16a34a', color: 'var(--color-white)' }}
                     onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#15803d')}
                     onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#16a34a')}
@@ -152,7 +152,7 @@ export default function Home() {
                   </button>
                   <button
                     onClick={handleSellClick}
-                    className="px-6 py-3 font-semibold rounded-lg transition-colors"
+                    className="px-6 py-3 font-semibold rounded-lg transition-colors md:text-lg text-sm"
                     style={{ background: '#dc2626', color: 'var(--color-white)' }}
                     onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#b91c1c')}
                     onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#dc2626')}
