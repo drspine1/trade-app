@@ -29,16 +29,9 @@ export const metadata: Metadata = {
     siteName: 'Pure Technique',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Pure Technique — Real-Time Trading Platform',
     description: 'Live market data, interactive charts, and simulated buy/sell trading.',
-  },
-  icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
   },
 };
 
