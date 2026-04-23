@@ -88,16 +88,15 @@ const MOCK_ASSETS = [
   },
 ];
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     await connectDB();
 
-    let assets = await Asset.find({}).lean();
+    let assets = await Asset.find({}).lean() as Array<Record<string, unknown>>;
 
     if (assets.length === 0) {
-      // Initialize with mock data
       await Asset.insertMany(MOCK_ASSETS);
-      assets = await Asset.find({}).lean();
+      assets = await Asset.find({}).lean() as Array<Record<string, unknown>>;
     }
 
     return NextResponse.json(assets);
@@ -107,10 +106,10 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     await connectDB();
-    const body = await request.json();
+    const body = await _request.json();
 
     const asset = new Asset(body);
     await asset.save();

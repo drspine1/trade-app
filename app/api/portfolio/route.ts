@@ -5,12 +5,34 @@ import { DEFAULT_USER_ID } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest) {
+interface PortfolioHolding {
+  symbol: string;
+  quantity: number;
+  averagePrice: number;
+  totalCost: number;
+  currentPrice?: number;
+}
+
+interface PortfolioDoc {
+  _id: unknown;
+  userId: string;
+  assets: PortfolioHolding[];
+  cash: number;
+  totalValue: number;
+  updatedAt?: Date;
+}
+
+interface AssetDoc {
+  symbol: string;
+  currentPrice: number;
+}
+
+export async function GET(_request: NextRequest) {
   try {
     await connectDB();
     const userId = DEFAULT_USER_ID;
 
-    let portfolio = await Portfolio.findOne({ userId }).lean();
+    let portfolio = await Portfolio.findOne({ userId }).lean() as PortfolioDoc | null;
 
     if (!portfolio) {
       const newPortfolio = new Portfolio({
@@ -20,24 +42,25 @@ export async function GET(request: NextRequest) {
         totalValue: 100000,
       });
       await newPortfolio.save();
-      portfolio = newPortfolio.toObject();
+      portfolio = newPortfolio.toObject() as PortfolioDoc;
     }
 
-    // Enrich with current prices
+    // Enrich holdings with live currentPrice
     if (portfolio.assets && portfolio.assets.length > 0) {
-      const assets = await Asset.find({
-        symbol: { $in: portfolio.assets.map((a) => a.symbol) },
-      }).lean();
+      const marketAssets = await Asset.find({
+        symbol: { $in: portfolio.assets.map((a: PortfolioHolding) => a.symbol) },
+      }).lean() as AssetDoc[];
 
-      const assetMap = new Map(assets.map((a) => [a.symbol, a]));
+      const assetMap = new Map(marketAssets.map((a: AssetDoc) => [a.symbol, a.currentPrice]));
 
-      const enrichedAssets = portfolio.assets.map((pa) => ({
+      const enrichedAssets: PortfolioHolding[] = portfolio.assets.map((pa: PortfolioHolding) => ({
         ...pa,
-        currentPrice: assetMap.get(pa.symbol)?.currentPrice || pa.averagePrice,
+        currentPrice: assetMap.get(pa.symbol) ?? pa.averagePrice,
       }));
 
       const totalHoldingsValue = enrichedAssets.reduce(
-        (sum, asset) => sum + (asset.quantity * (asset.currentPrice || 0)),
+        (sum: number, asset: PortfolioHolding) =>
+          sum + asset.quantity * (asset.currentPrice ?? 0),
         0
       );
 

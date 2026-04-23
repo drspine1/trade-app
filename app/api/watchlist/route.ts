@@ -5,25 +5,37 @@ import { DEFAULT_USER_ID } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest) {
+interface WatchlistDoc {
+  _id: unknown;
+  userId: string;
+  symbols: string[];
+}
+
+interface AssetDoc {
+  symbol: string;
+  name: string;
+  currentPrice: number;
+  change24h: number;
+  changePercent24h: number;
+}
+
+export async function GET(_request: NextRequest) {
   try {
     await connectDB();
     const userId = DEFAULT_USER_ID;
 
-    let watchlist = await Watchlist.findOne({ userId }).lean();
+    let watchlist = await Watchlist.findOne({ userId }).lean() as WatchlistDoc | null;
 
     if (!watchlist) {
-      const newWatchlist = new Watchlist({
-        userId,
-        symbols: ['BTC', 'ETH', 'AAPL'],
-      });
+      const newWatchlist = new Watchlist({ userId, symbols: ['BTC', 'ETH', 'AAPL'] });
       await newWatchlist.save();
-      watchlist = newWatchlist.toObject();
+      watchlist = newWatchlist.toObject() as WatchlistDoc;
     }
 
-    // Enrich with asset data
     if (watchlist.symbols && watchlist.symbols.length > 0) {
-      const assets = await Asset.find({ symbol: { $in: watchlist.symbols } }).lean();
+      const assets = await Asset.find({
+        symbol: { $in: watchlist.symbols },
+      }).lean() as AssetDoc[];
       return NextResponse.json({ ...watchlist, assets });
     }
 
@@ -39,7 +51,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
     const userId = DEFAULT_USER_ID;
     const body = await request.json();
-    const { symbol } = body;
+    const { symbol } = body as { symbol: string };
 
     if (!symbol) {
       return NextResponse.json({ error: 'Symbol required' }, { status: 400 });
@@ -54,7 +66,6 @@ export async function POST(request: NextRequest) {
     }
 
     await watchlist.save();
-
     return NextResponse.json(watchlist.toObject());
   } catch (error) {
     console.error('Error adding to watchlist:', error);
@@ -79,9 +90,8 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Watchlist not found' }, { status: 404 });
     }
 
-    watchlist.symbols = watchlist.symbols.filter((s) => s !== symbol);
+    watchlist.symbols = watchlist.symbols.filter((s: string) => s !== symbol);
     await watchlist.save();
-
     return NextResponse.json(watchlist.toObject());
   } catch (error) {
     console.error('Error removing from watchlist:', error);
