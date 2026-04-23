@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { Transaction } from '@/lib/models';
-import { DEFAULT_USER_ID } from '@/lib/constants';
+import { getUserId } from '@/lib/getUserId';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(_request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
     await connectDB();
-    const userId = DEFAULT_USER_ID;
+    const userId = getUserId(request);
 
     const transactions = await Transaction.find({ userId })
       .sort({ timestamp: -1 })

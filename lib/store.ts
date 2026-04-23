@@ -133,10 +133,12 @@ interface UIState {
   showBuyModal: boolean;
   showSellModal: boolean;
   selectedAssetForTrade: Asset | null;
+  sessionId: string | null;
   setSelectedSymbol: (symbol: string | null) => void;
   setShowBuyModal: (show: boolean) => void;
   setShowSellModal: (show: boolean) => void;
   setSelectedAssetForTrade: (asset: Asset | null) => void;
+  setSessionId: (id: string) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -144,8 +146,10 @@ export const useUIStore = create<UIState>((set) => ({
   showBuyModal: false,
   showSellModal: false,
   selectedAssetForTrade: null,
+  sessionId: null,
   setSelectedSymbol: (symbol) => set({ selectedSymbol: symbol }),
   setShowBuyModal: (show) => set({ showBuyModal: show }),
   setShowSellModal: (show) => set({ showSellModal: show }),
   setSelectedAssetForTrade: (asset) => set({ selectedAssetForTrade: asset }),
+  setSessionId: (id) => set({ sessionId: id }),
 }));

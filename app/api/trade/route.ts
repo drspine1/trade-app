@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { Portfolio, Transaction, Asset } from '@/lib/models';
-import { DEFAULT_USER_ID } from '@/lib/constants';
+import { getUserId } from '@/lib/getUserId';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
     await connectDB();
-    const userId = DEFAULT_USER_ID;
+    const userId = getUserId(request);
     const body = await request.json();
     const { symbol, type, quantity, price } = body;
 

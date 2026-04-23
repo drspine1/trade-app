@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback } from 'react';
 import { useTransactionsStore } from '@/lib/store';
+import { fetchWithSession } from '@/lib/fetchWithSession';
 
 export function useTransactions() {
   const { transactions, loading, error, setTransactions, setLoading, setError } =
@@ -11,7 +12,7 @@ export function useTransactions() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/transactions');
+      const response = await fetchWithSession('/api/transactions');
       const data = await response.json();
 
       if (!response.ok) {

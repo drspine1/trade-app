@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useMarketStore } from '@/lib/store';
 import { Search, Plus, X, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
+import { fetchWithSession } from '@/lib/fetchWithSession';
 
 interface WatchlistPanelProps {
   onSelectAsset?: (symbol: string) => void;
@@ -27,7 +28,7 @@ export function WatchlistPanel({ onSelectAsset }: WatchlistPanelProps) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/watchlist');
+      const res = await fetchWithSession('/api/watchlist');
       if (!res.ok) throw new Error('Failed to load watchlist');
       const data = await res.json();
       setWatchlistSymbols(data.symbols ?? []);
@@ -42,7 +43,7 @@ export function WatchlistPanel({ onSelectAsset }: WatchlistPanelProps) {
 
   const addToWatchlist = useCallback(async (symbol: string) => {
     try {
-      const res = await fetch('/api/watchlist', {
+      const res = await fetchWithSession('/api/watchlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ symbol }),
@@ -57,7 +58,7 @@ export function WatchlistPanel({ onSelectAsset }: WatchlistPanelProps) {
 
   const removeFromWatchlist = useCallback(async (symbol: string) => {
     try {
-      const res = await fetch(`/api/watchlist?symbol=${symbol}`, { method: 'DELETE' });
+      const res = await fetchWithSession(`/api/watchlist?symbol=${symbol}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to remove');
       const data = await res.json();
       setWatchlistSymbols(data.symbols ?? []);

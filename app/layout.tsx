@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { NavHeader } from '@/components/NavHeader';
 import { PriceTicker } from '@/components/PriceTicker';
 import { Footer } from '@/components/Footer';
+import { SessionProvider } from '@/components/SessionProvider';
 import { Suspense } from 'react';
 import './globals.css';
 
@@ -53,6 +54,8 @@ export default function RootLayout({
       className={`${geist.variable} ${geistMono.variable}`}
     >
       <body className="font-sans antialiased">
+        {/* Session ID initializer — runs once, no UI */}
+        <SessionProvider />
         {/* Persistent navigation — client component */}
         <Suspense fallback={null}>
           <NavHeader />

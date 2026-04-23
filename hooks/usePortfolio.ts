@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback } from 'react';
 import { usePortfolioStore, useMarketStore } from '@/lib/store';
+import { fetchWithSession } from '@/lib/fetchWithSession';
 
 export function usePortfolio() {
   const { portfolio, loading, error, setPortfolio, updatePortfolio, setLoading, setError } =
@@ -12,7 +13,7 @@ export function usePortfolio() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/portfolio');
+      const response = await fetchWithSession('/api/portfolio');
       const data = await response.json();
 
       if (!response.ok) {
@@ -63,7 +64,7 @@ export function usePortfolio() {
       const asset = assets.find((a) => a.symbol === symbol);
       if (!asset) throw new Error('Asset not found');
 
-      const response = await fetch('/api/trade', {
+      const response = await fetchWithSession('/api/trade', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ symbol, type, quantity, price: asset.currentPrice }),

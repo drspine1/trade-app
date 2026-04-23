@@ -3,6 +3,7 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { useMarketStore, Asset } from '@/lib/store';
 import { realtimeEngine } from '@/lib/realtime';
+import { fetchWithSession } from '@/lib/fetchWithSession';
 
 export function useAssets() {
   const { assets, loading, error, setAssets, updateAsset, setLoading, setError } =
@@ -15,15 +16,14 @@ export function useAssets() {
     setError(null);
     try {
       // Step 1: Try to seed real prices from Finnhub REST quotes
-      // This runs silently — if it fails (no API key) we just use DB prices
       try {
-        await fetch('/api/quotes');
+        await fetchWithSession('/api/quotes');
       } catch {
-        // Non-fatal — DB may already have prices from a previous run
+        // Non-fatal
       }
 
-      // Step 2: Fetch the asset list from our DB (now with real prices if available)
-      const response = await fetch('/api/assets');
+      // Step 2: Fetch the asset list
+      const response = await fetchWithSession('/api/assets');
       const data = await response.json();
 
       if (!response.ok) {

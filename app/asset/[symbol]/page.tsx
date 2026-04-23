@@ -6,6 +6,7 @@ import { AssetChart } from '@/components/AssetChart';
 import { TradeModal } from '@/components/TradeModal';
 import Link from 'next/link';
 import { ArrowLeft, TrendingUp, TrendingDown } from 'lucide-react';
+import { fetchWithSession } from '@/lib/fetchWithSession';
 
 interface AssetPageProps {
   params: Promise<{ symbol: string }>;
@@ -27,7 +28,7 @@ export default function AssetPage({ params }: AssetPageProps) {
     if (!asset) return;
     const type = showBuyModal ? 'BUY' : 'SELL';
     setTradeError(null);
-    const res = await fetch('/api/trade', {
+    const res = await fetchWithSession('/api/trade', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ symbol: asset.symbol, type, quantity, price: asset.currentPrice }),
