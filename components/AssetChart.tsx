@@ -203,11 +203,11 @@ export function AssetChart({ asset }: { asset: Asset | null }) {
             }} />
             <Bar
               dataKey="range"
-              shape={(props: CandleProps & { payload?: OHLCPoint }) => {
+              shape={((props: CandleProps & { payload?: OHLCPoint }) => {
                 const isUp = props.payload?.isUp ?? true;
-                const color = isUp ? '#4ade80' : '#ff7b02'; // green up, orange down
+                const color = isUp ? '#4ade80' : '#ff7b02';
                 return <CandleShape {...props} fill={color} />;
-              }}
+              }) as any}
               isAnimationActive={false}
             />
           </ComposedChart>
