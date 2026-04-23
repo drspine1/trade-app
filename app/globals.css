@@ -1,0 +1,157 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Brand Design Tokens ──────────────────────────────────────────────────── */
+:root {
+  /* Brand colours */
+  --color-primary:         #ff7b02;
+  --color-primary-vibrant: #e5a55d;
+
+  /* Background layers — deep purple/violet, darkest → lightest */
+  --color-bg-1: #140021;
+  --color-bg-2: #1e0032;
+  --color-bg-3: #25003e;
+  --color-bg-4: #36005a;
+
+  /* Text colours */
+  --color-light: #d0b8e0;
+  --color-white: hsl(0, 0%, 90%);
+
+  /* ── shadcn / Tailwind semantic aliases ── */
+  --background:             #140021;
+  --foreground:             hsl(0, 0%, 90%);
+  --card:                   #25003e;
+  --card-foreground:        hsl(0, 0%, 90%);
+  --popover:                #25003e;
+  --popover-foreground:     hsl(0, 0%, 90%);
+  --primary:                #ff7b02;
+  --primary-foreground:     hsl(0, 0%, 90%);
+  --secondary:              #36005a;
+  --secondary-foreground:   hsl(0, 0%, 90%);
+  --muted:                  #36005a;
+  --muted-foreground:       #d0b8e0;
+  --accent:                 #ff7b02;
+  --accent-foreground:      hsl(0, 0%, 90%);
+  --destructive:            #ef4444;
+  --destructive-foreground: #fecaca;
+  --border:                 #36005a;
+  --input:                  #25003e;
+  --ring:                   #ff7b02;
+
+  /* Charts */
+  --chart-1: #10b981;
+  --chart-2: #ff7b02;
+  --chart-3: #e5a55d;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+
+  /* Sidebar */
+  --sidebar:                    #1e0032;
+  --sidebar-foreground:         hsl(0, 0%, 90%);
+  --sidebar-primary:            #ff7b02;
+  --sidebar-primary-foreground: hsl(0, 0%, 90%);
+  --sidebar-accent:             #36005a;
+  --sidebar-accent-foreground:  hsl(0, 0%, 90%);
+  --sidebar-border:             #36005a;
+  --sidebar-ring:               #ff7b02;
+
+  --radius: 0.625rem;
+}
+
+/* Dark — identical (app is always dark) */
+.dark {
+  --background:             #140021;
+  --foreground:             hsl(0, 0%, 90%);
+  --card:                   #25003e;
+  --card-foreground:        hsl(0, 0%, 90%);
+  --popover:                #25003e;
+  --popover-foreground:     hsl(0, 0%, 90%);
+  --primary:                #ff7b02;
+  --primary-foreground:     hsl(0, 0%, 90%);
+  --secondary:              #36005a;
+  --secondary-foreground:   hsl(0, 0%, 90%);
+  --muted:                  #36005a;
+  --muted-foreground:       #d0b8e0;
+  --accent:                 #ff7b02;
+  --accent-foreground:      hsl(0, 0%, 90%);
+  --destructive:            #ef4444;
+  --destructive-foreground: #fecaca;
+  --border:                 #36005a;
+  --input:                  #25003e;
+  --ring:                   #ff7b02;
+  --chart-1: #10b981;
+  --chart-2: #ff7b02;
+  --chart-3: #e5a55d;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+  --sidebar:                    #1e0032;
+  --sidebar-foreground:         hsl(0, 0%, 90%);
+  --sidebar-primary:            #ff7b02;
+  --sidebar-primary-foreground: hsl(0, 0%, 90%);
+  --sidebar-accent:             #36005a;
+  --sidebar-accent-foreground:  hsl(0, 0%, 90%);
+  --sidebar-border:             #36005a;
+  --sidebar-ring:               #ff7b02;
+}
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
+  /* Map shadcn tokens → Tailwind colour utilities */
+  --color-background:              var(--background);
+  --color-foreground:              var(--foreground);
+  --color-card:                    var(--card);
+  --color-card-foreground:         var(--card-foreground);
+  --color-popover:                 var(--popover);
+  --color-popover-foreground:      var(--popover-foreground);
+  --color-primary:                 var(--primary);
+  --color-primary-foreground:      var(--primary-foreground);
+  --color-secondary:               var(--secondary);
+  --color-secondary-foreground:    var(--secondary-foreground);
+  --color-muted:                   var(--muted);
+  --color-muted-foreground:        var(--muted-foreground);
+  --color-accent:                  var(--accent);
+  --color-accent-foreground:       var(--accent-foreground);
+  --color-destructive:             var(--destructive);
+  --color-destructive-foreground:  var(--destructive-foreground);
+  --color-border:                  var(--border);
+  --color-input:                   var(--input);
+  --color-ring:                    var(--ring);
+  --color-chart-1:                 var(--chart-1);
+  --color-chart-2:                 var(--chart-2);
+  --color-chart-3:                 var(--chart-3);
+  --color-chart-4:                 var(--chart-4);
+  --color-chart-5:                 var(--chart-5);
+  --radius-sm:  calc(var(--radius) - 4px);
+  --radius-md:  calc(var(--radius) - 2px);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) + 4px);
+  --color-sidebar:                     var(--sidebar);
+  --color-sidebar-foreground:          var(--sidebar-foreground);
+  --color-sidebar-primary:             var(--sidebar-primary);
+  --color-sidebar-primary-foreground:  var(--sidebar-primary-foreground);
+  --color-sidebar-accent:              var(--sidebar-accent);
+  --color-sidebar-accent-foreground:   var(--sidebar-accent-foreground);
+  --color-sidebar-border:              var(--sidebar-border);
+  --color-sidebar-ring:                var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    background-color: #140021;
+    color: hsl(0, 0%, 90%);
+  }
+}
+
+/* ─── PriceTicker seamless scroll ──────────────────────────────────────────── */
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
